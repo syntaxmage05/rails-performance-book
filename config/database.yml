@@ -10,6 +10,8 @@ postgres: &postgres
   pool: 5
   username: postgres
   password: password
+  host: 127.0.0.1 
+  port: 5432
 
 mysql: &mysql
   adapter: mysql2
@@ -17,7 +19,7 @@ mysql: &mysql
   username: root
 
 development:
-  <<: <%= ENV['DB_MODE'] ? "*#{ENV['DB_MODE']}" : "*mysql" %>
+  <<: <%= ENV['DB_MODE'] ? "*#{ENV['DB_MODE']}" : "*postgres" %>
   database: moviestore_development
   cache:
     <<: <%= ENV['DB_MODE'] ? "*#{ENV['DB_MODE']}" : "*mysql" %>
@@ -32,9 +34,9 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: <%= ENV['DB_MODE'] ? "*#{ENV['DB_MODE']}" : "*mysql" %>
+  <<: *postgres
   database: moviestore_test
 
 production:
-  <<: <%= ENV['DB_MODE'] ? "*#{ENV['DB_MODE']}" : "*mysql" %>
+  <<: *postgres
   database: moviestore_production
