@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
   def show
     @store = Store.find(params[:id])
-    @films = @store.films.eager_load(:language)
+    @films = @store.films.includes(:language)
   end
 
   def index
